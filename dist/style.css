@@ -115,7 +115,6 @@ nav li .underline.active {
 
 div#BodyWrapper {
     z-index: 1;
-    background-image:url("background.png");
     background-repeat: repeat;
     width:100%;
     height: auto;

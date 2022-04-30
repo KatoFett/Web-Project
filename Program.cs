@@ -70,7 +70,7 @@
             if(file.Extension.Equals(".html", StringComparison.CurrentCultureIgnoreCase))
             {
                 var content = await File.ReadAllLinesAsync(file.FullName);
-                var newContent = InsertComponents(layout, content);
+                var newContent = EvaluateAbsolutePath(InsertComponents(layout, content), location);
                 await File.WriteAllLinesAsync(destFile, newContent);
                 Console.WriteLine($"Copied view '{destFile}'.");
             }
@@ -79,6 +79,19 @@
                 File.Copy(file.FullName, destFile);
                 Console.WriteLine($"Copied generic file '{destFile}'.");
             }
+        }
+
+        static string[] EvaluateAbsolutePath(string[] content, string location)
+        {
+            return content
+                .Select(line => line.Replace(
+                    "{AbsolutePath}",
+                    location == string.Empty
+                        ? string.Empty
+                        : Enumerable
+                            .Repeat("../", location.Split('\\').Length - 1)
+                            .Aggregate((a, b) => $"{a}{b}"))
+                ).ToArray();
         }
 
         static async Task InitializeComponents()
