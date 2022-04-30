@@ -11,7 +11,7 @@
         static string SrcComponentsDirectory = $"{SrcDirectory}\\components";
         static string SrcViewsDirectory = $"{SrcDirectory}\\views";
         static string LayoutDirectory = $"{SrcDirectory}\\layout.html";
-        static string DistDirectory = $"{Environment.CurrentDirectory}\\dist";
+        static string DistDirectory = $"{Environment.CurrentDirectory}\\docs";
 
         static string[] InternalDirectories = new string[]
         {
@@ -29,7 +29,7 @@
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            Directory.Delete(DistDirectory, true);
+            if(Directory.Exists(DistDirectory)) Directory.Delete(DistDirectory, true);
             Directory.CreateDirectory(DistDirectory);
             Console.WriteLine($"Deleted old views ({stopwatch.ElapsedMilliseconds} ms).");
 
