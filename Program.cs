@@ -70,7 +70,8 @@
             if(file.Extension.Equals(".html", StringComparison.CurrentCultureIgnoreCase))
             {
                 var content = await File.ReadAllLinesAsync(file.FullName);
-                var newContent = EvaluateAbsolutePath(InsertComponents(layout, content), location);
+                var ignoreTemplate = Regex.IsMatch(content[0], "<NoTemplate\\s*?\\/>", RegexOptions.IgnoreCase);
+                var newContent = EvaluateAbsolutePath(ignoreTemplate ? content : InsertComponents(layout, content), location);
                 await File.WriteAllLinesAsync(destFile, newContent);
                 Console.WriteLine($"Copied view '{destFile}'.");
             }
@@ -108,14 +109,14 @@
             //Though this is arguably harder...
             view.ToList().ForEach(line => 
             {
-                var matches = Regex.Matches(line.Trim(), "<component\\s*?name=\"\\S+?\"\\s*?\\/>");
+                var matches = Regex.Matches(line.Trim(), "<component\\s*?name=\"\\S+?\"\\s*?\\/>", RegexOptions.IgnoreCase);
                 if(matches.Any())
                 {
                     if(matches[0].Index > 0) retval.Add(line[0..(matches[0].Index)]);
                     var spaces = line[..(line.Length - line.TrimStart().Length)];
                     matches.ToList().ForEach(m =>
                     {
-                        var componentName = Regex.Match(m.Value, "(?<=name=\")\\S*?(?=\")").Value;
+                        var componentName = GetComponentName(m.Value);
                         var isContentComponent = "content".Equals(componentName, StringComparison.CurrentCultureIgnoreCase);
                         var component = isContentComponent
                             ? new Component("content", content)
@@ -130,6 +131,13 @@
             });
             return retval.ToArray();
         }
+
+        static string GetComponentName(string input)
+        {
+            var component = Regex.Match(input.Trim(), "<component\\s*?name=\"\\S+?\"\\s*?\\/>");
+            return component.Success ? Regex.Match(component.Value, "(?<=name=\")\\S*?(?=\")").Value : string.Empty;
+        }
+
     }
 
     //Defines a module which can be injected into a view by the <component name="" /> tag.
