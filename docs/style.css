@@ -34,12 +34,6 @@ tab::before {
     content: \&nbps\;;
 }
 
-a {
-    color: black;
-    cursor: pointer;
-    text-decoration: none;
-}
-
 p {
     font-size: 1.5em;
     text-indent: 1.5em;
@@ -105,6 +99,9 @@ nav a {
     display:flex;
     font-size:24px;
     margin: 0 0 0px 0;
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 nav  a .underline{
@@ -140,7 +137,7 @@ div#BodyContent {
     margin: 0 auto;
     min-height: 100%;
     position: relative;
-    padding:20px;
+    padding:40px;
 }
 
 .text-center {
@@ -193,4 +190,26 @@ div.dropdown div.dropdown > .dropdown-content{
 div.dropdown-content{
     background-color: white;
     padding: 0 0 var(--border-radius) 0;
+}
+
+.inline{ 
+    display:inline-block;
+}
+
+hr {
+    margin-bottom:40px;
+}
+
+/* MARGINS */
+
+.m-b-sm {
+    margin-bottom: 5px;
+}
+
+.m-b-md {
+    margin-bottom: 10px;
+}
+
+.m-b-lg {
+    margin-bottom: 25px;
 }
