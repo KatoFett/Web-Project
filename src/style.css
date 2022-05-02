@@ -116,8 +116,7 @@ nav  a .underline{
     transition:width 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-nav li:hover .underline,
-nav li .underline.active {
+nav a:hover .underline {
     width:100%;
 }
 
@@ -151,4 +150,47 @@ div#BodyContent {
 img {
     box-shadow:0 0 10px black;
     border-radius:20px;
+}
+
+div.dropdown{
+    --border-radius:5px;
+    border-radius: var(--border-radius);
+    background-color: white;
+}
+
+div.dropdown:hover{
+    box-shadow: 0 0 10px black;
+}
+
+div.dropdown > .dropdown-content{
+    display: none;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+div.dropdown:hover > .dropdown-content{
+    display: block;
+}
+
+div.dropdown > .dropdown-btn{
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+div.dropdown div.dropdown{
+    position: relative;
+    box-shadow: none;
+}
+
+div.dropdown div.dropdown > .dropdown-content{
+    position: absolute;
+    top:0;
+    left: 100%;
+    width: 100%;
+    padding: var(--border-radius) 0;
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 10px black;
+}
+
+div.dropdown-content{
+    background-color: white;
+    padding: 0 0 var(--border-radius) 0;
 }

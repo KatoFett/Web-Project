@@ -70,7 +70,7 @@
             if(file.Extension.Equals(".html", StringComparison.CurrentCultureIgnoreCase))
             {
                 var content = await File.ReadAllLinesAsync(file.FullName);
-                var ignoreTemplate = Regex.IsMatch(content[0], "<NoTemplate\\s*?\\/>", RegexOptions.IgnoreCase);
+                var ignoreTemplate = content.Length > 0 && Regex.IsMatch(content[0], "<NoTemplate\\s*?\\/>", RegexOptions.IgnoreCase);
                 var newContent = EvaluateAbsolutePath(ignoreTemplate ? content : InsertComponents(layout, content), location);
                 await File.WriteAllLinesAsync(destFile, newContent);
                 Console.WriteLine($"Copied view '{destFile}'.");
