@@ -4,9 +4,8 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Text.RegularExpressions;
-    class Program
+    public class Program
     {
-        static List<Component> Components = new List<Component>();
         static string SrcDirectory = $"{Environment.CurrentDirectory}\\src";
         static string SrcComponentsDirectory = $"{SrcDirectory}\\components";
         static string SrcViewsDirectory = $"{SrcDirectory}\\views";
@@ -29,17 +28,17 @@
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            if(Directory.Exists(DistDirectory)) Directory.Delete(DistDirectory, true);
+            if (Directory.Exists(DistDirectory)) Directory.Delete(DistDirectory, true);
             Directory.CreateDirectory(DistDirectory);
             Console.WriteLine($"Deleted old views ({stopwatch.ElapsedMilliseconds} ms).");
 
             stopwatch.Restart();
             await InitializeComponents();
-            Console.WriteLine($"Initialized {Components.Count} component{(Components.Count != 1 ? "s" : "")} ({stopwatch.ElapsedMilliseconds} ms).");
+            Console.WriteLine($"Initialized {Component.Components.Count} component{(Component.Components.Count != 1 ? "s" : "")} ({stopwatch.ElapsedMilliseconds} ms).");
 
             stopwatch.Restart();
-            var layoutTemplate = InsertComponents(await File.ReadAllLinesAsync(LayoutDirectory), Array.Empty<string>(), false);
-            Console.WriteLine($"Created layout template ({stopwatch.ElapsedMilliseconds} ms).");
+            var layoutTemplate = await File.ReadAllLinesAsync(LayoutDirectory);
+            Console.WriteLine($"Loaded layout template ({stopwatch.ElapsedMilliseconds} ms).");
 
             stopwatch.Restart();
             await LoopThroughDirectory(string.Empty, layoutTemplate);
@@ -63,93 +62,40 @@
 
         static async Task CreateView(string location, FileInfo file, string[] layout)
         {
-            if(location.StartsWith("\\views", StringComparison.CurrentCultureIgnoreCase)) location = location.Substring("\\views".Length);
+            if (location.StartsWith("\\views", StringComparison.CurrentCultureIgnoreCase)) location = location.Substring("\\views".Length);
             var destDirectory = $"{DistDirectory}{location}";
             Directory.CreateDirectory(destDirectory); //Automatically skips if directory already exists
             var destFile = $"{destDirectory}\\{file.Name}";
-            if(file.Extension.Equals(".html", StringComparison.CurrentCultureIgnoreCase))
+            if (file.Extension.Equals(".html", StringComparison.CurrentCultureIgnoreCase))
             {
-                var content = await File.ReadAllLinesAsync(file.FullName);
-                var ignoreTemplate = content.Length > 0 && Regex.IsMatch(content[0], "<NoTemplate\\s*?\\/>", RegexOptions.IgnoreCase);
-                var newContent = EvaluateAbsolutePath(ignoreTemplate ? content : InsertComponents(layout, content), location);
-                await File.WriteAllLinesAsync(destFile, newContent);
-                Console.WriteLine($"Copied view '{destFile}'.");
+                var builder = new PageBuilder(file, layout);
+                builder.Variables["AbsolutePath"] = EvaluateAbsolutePath(location);
+                builder.Variables["PageTitle"] = "Page";
+                await File.WriteAllLinesAsync(destFile, await builder.BuildPage());
+                Console.WriteLine($"Built view '{destFile}'.");
             }
             else
             {
                 File.Copy(file.FullName, destFile);
-                Console.WriteLine($"Copied generic file '{destFile}'.");
+                Console.WriteLine($"Copied file '{destFile}'.");
             }
         }
 
-        static string[] EvaluateAbsolutePath(string[] content, string location)
+        static string EvaluateAbsolutePath(string location)
         {
-            return content
-                .Select(line => line.Replace(
-                    "{AbsolutePath}",
-                    location == string.Empty
-                        ? string.Empty
-                        : Enumerable
-                            .Repeat("../", location.Split('\\').Length - 1)
-                            .Aggregate((a, b) => $"{a}{b}"))
-                ).ToArray();
+            return location == string.Empty
+                    ? string.Empty
+                    : Enumerable
+                        .Repeat("../", location.Split('\\').Length - 1)
+                        .Aggregate((a, b) => $"{a}{b}");
         }
 
         static async Task InitializeComponents()
         {
             var directoryInfo = new DirectoryInfo(SrcComponentsDirectory);
             var tasks = directoryInfo.GetFiles().ToDictionary(f => f, f => File.ReadAllLinesAsync(f.FullName));
-            Components = (await Task.WhenAll(tasks.Select(async k => new Component(k.Key.Name[..^(k.Key.Extension.Length)], await k.Value)))).ToList();
+            await Task.WhenAll(tasks.Values);
+            Component.Components = tasks.ToDictionary(k => k.Key.Name[..^(k.Key.Extension.Length)], k => new Component(k.Value.Result));
         }
-
-        static string[] InsertComponents(string[] view, string[] content, bool injectContent = true)
-        {
-            var retval = new List<string>();
-            //Could use an HTML parser but I'm lazy and don't want to include more libraries
-            //Though this is arguably harder...
-            view.ToList().ForEach(line => 
-            {
-                var matches = Regex.Matches(line.Trim(), "<component\\s*?name=\"\\S+?\"\\s*?\\/>", RegexOptions.IgnoreCase);
-                if(matches.Any())
-                {
-                    if(matches[0].Index > 0) retval.Add(line[0..(matches[0].Index)]);
-                    var spaces = line[..(line.Length - line.TrimStart().Length)];
-                    matches.ToList().ForEach(m =>
-                    {
-                        var componentName = GetComponentName(m.Value);
-                        var isContentComponent = "content".Equals(componentName, StringComparison.CurrentCultureIgnoreCase);
-                        var component = isContentComponent
-                            ? new Component("content", content)
-                            : Components.FirstOrDefault(c => c.Name.Equals(componentName, StringComparison.CurrentCultureIgnoreCase));
-                        if(component == null)
-                            throw new ArgumentException($"Unable to find a component '{componentName}' (case-insensitive).");
-                        if(isContentComponent && !injectContent) retval.Add(line);
-                        else retval.AddRange(InsertComponents(component.Content.Select(c => $"{spaces}{c}").ToArray(), content));
-                    });
-                }
-                else retval.Add(line);
-            });
-            return retval.ToArray();
-        }
-
-        static string GetComponentName(string input)
-        {
-            var component = Regex.Match(input.Trim(), "<component\\s*?name=\"\\S+?\"\\s*?\\/>");
-            return component.Success ? Regex.Match(component.Value, "(?<=name=\")\\S*?(?=\")").Value : string.Empty;
-        }
-
-    }
-
-    //Defines a module which can be injected into a view by the <component name="" /> tag.
-    class Component
-    {
-        public Component(string name, string[] content)
-        {
-            Name = name;
-            Content = content.ToList();
-        }
-
-        public string Name { get; }
-        public List<string> Content { get; }
     }
 }
