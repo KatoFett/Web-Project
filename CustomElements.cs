@@ -4,18 +4,16 @@ namespace WebProject
     {
         static CustomElement()
         {
-            AvailableElements = new Dictionary<string, Type>
-            {
-                {ComponentElement.Tag, typeof(ComponentElement)},
-                {ContentElement.Tag, typeof(ContentElement)},
-                {VariableElement.Tag, typeof(VariableElement)},
-                {NoLayoutElement.Tag, typeof(NoLayoutElement)},
-            };
+            var types = typeof(CustomElement).Assembly.GetTypes().Where(t => t.IsAssignableTo(typeof(CustomElement)) && !t.IsAbstract);
+            AvailableElements = types.ToDictionary(k => ((CustomElement)Activator.CreateInstance(k)).TagName, k => k);
         }
 
-        public CustomElement(IEnumerable<string> args)
-        {
+        public CustomElement(){
             Args = new Dictionary<string, string>();
+        }
+
+        public CustomElement(IEnumerable<string> args) : this()
+        {
             var formattedArgs = args.Select(s => s.Replace("\"", string.Empty).Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
             for (int i = 0; i < formattedArgs.Count; i += 2)
             {
@@ -53,6 +51,7 @@ namespace WebProject
     /// </summary>
     public abstract class MultiLineElement : CustomElement
     {
+        public MultiLineElement() : base() {}
         public MultiLineElement(IEnumerable<string> args) : base(args) { }
 
         public abstract string[] Execute(PageBuilder builder);
@@ -63,6 +62,7 @@ namespace WebProject
     /// </summary>
     public abstract class ActionElement : CustomElement
     {
+        public ActionElement() : base() { }
         public ActionElement(IEnumerable<string> args) : base(args) { }
         public abstract void Execute(PageBuilder builder);
     }
@@ -72,6 +72,7 @@ namespace WebProject
     /// </summary>
     public sealed class ComponentElement : MultiLineElement
     {
+        public ComponentElement() : base() { }
         public ComponentElement(IEnumerable<string> args) : base(args) { }
         public const string Tag = "component";
         public override string TagName => Tag;
@@ -88,6 +89,7 @@ namespace WebProject
     /// </summary>
     public sealed class ContentElement : MultiLineElement
     {
+        public ContentElement() : base() { }
         public ContentElement(IEnumerable<string> args) : base(args) { }
         public override string TagName => Tag;
         public const string Tag = "content";
@@ -102,6 +104,7 @@ namespace WebProject
     /// </summary>
     public sealed class VariableElement : ActionElement
     {
+        public VariableElement() : base() { }
         public VariableElement(IEnumerable<string> args) : base(args) { }
         public override string TagName => Tag;
         public const string Tag = "variable";
@@ -118,6 +121,7 @@ namespace WebProject
     /// </summary>
     public sealed class NoLayoutElement : ActionElement
     {
+        public NoLayoutElement() : base() { }
         public NoLayoutElement(IEnumerable<string> args) : base(args) { }
         public override string TagName => Tag;
         public const string Tag = "nolayout";
