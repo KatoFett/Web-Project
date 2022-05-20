@@ -1,8 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Work+Sans');
+
 :root {
     --primary-color: #FDFFFC;
     --secondary-color: #4D5359;
     --accent1-color: #2EC4B6;
     --accent2-color: #F28482;
+    --heading-font: "Work Sans";
+    --paragraph-font: Montserrat;
+}
+
+html {
+    font-family: var(--paragraph-font);
+    font-size: 22px;
 }
 
 #content {
@@ -17,12 +26,18 @@ main section {
     text-align: center;
 }
 
+main section img{
+    box-sizing: border-box;
+}
+
 #background {
     height: 725px;
 }
 
 body {
     background-color: var(--primary-color);
+    padding: 0;
+    margin: 0;
 }
 
 header {
@@ -30,6 +45,7 @@ header {
 }
 
 nav a {
+    padding: 35px;
     text-align: center;
     color: var(--primary-color);
     text-decoration: none;
@@ -41,7 +57,22 @@ nav a:hover {
 }
 
 .home-title {
-    color: var(--secondary-color)
+    margin-top: 10px;
+    color: var(--secondary-color);
+    font-size: 2em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--heading-font);
+}
+
+h2 {
+    margin: 0;
 }
 
 h4 {
@@ -50,9 +81,13 @@ h4 {
 
 .book,
 .join {
+    border-radius:5px;
+    margin-top: 50px;
+    padding: 15px 30px;
     background-color: var(--accent1-color);
     color: var(--primary-color);
     text-decoration: none;
+    font-size: 18px;
 }
 
 .book:hover,
@@ -67,7 +102,9 @@ h4 {
 }
 
 .msg {
+    padding: 35px;
     background-color: var(--accent1-color);
+    line-height: 1.5em;
 }
 
 .msg h2 {
@@ -75,10 +112,14 @@ h4 {
 }
 
 .msg p {
+    padding-bottom: 15px;
     color: var(--primary-color);
+    font-size: .8em;
 }
 
 footer {
+    margin-top: 200px;
+    padding: 25px 50px;
     background-color: var(--secondary-color);
 }
 
@@ -95,14 +136,34 @@ footer a:hover {
     color: var(--accent2-color);
 }
 
+footer .social img {
+    padding-top: 15px;
+}
+
+#logo_link {
+    padding-top: 5px;
+}
+
 .logo {
     width: 80px;
 }
 
 .icon {
     width: 80px;
+    padding-top: 10px;
 }
 
 #hero-msg {
     width: 100%;
+}
+
+.rivers-card,
+.camping-card,
+.rapids-card,
+.mountains {
+    margin: 200px 0;
+}
+
+.card-img{
+    border: 10px solid var(--accent1-color);
 }
