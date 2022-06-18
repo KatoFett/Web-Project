@@ -301,3 +301,28 @@ footer .social img {
     opacity: .6;
     transform: scale(1.1);
 }
+
+#hero-box.small-height {
+    max-height: 400px;
+    overflow: hidden;
+}
+
+#hero-box.small-height>#hero-img {
+    position: relative;
+    top: -65%;
+}
+
+.faq {
+    text-align: left;
+}
+
+.faq h4 {
+    border: 3px solid black;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 10px;
+}
+
+.faq p {
+    margin-left: 50px;
+}
