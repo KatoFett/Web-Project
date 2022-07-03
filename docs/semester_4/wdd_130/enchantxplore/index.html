@@ -9,37 +9,48 @@
 
 <body>
     <header>
-        <a href=""><img src="images/logo.png" alt="Site Logo" /></a>
+        <a class="logo-link" href="">
+            <img class="no-hover" src="images/logo.png" alt="Site Logo" />
+        </a>
         <nav>
-            <a href="index.html">Home</a>
-            <a href="category.html">Category</a>
-            <a href="enchantment.html">Enchantment</a>
+            <a href="index.html">
+                <h3>Home</h2>
+            </a>
+            <a href="category.html">
+                <h3>Category</h1>
+            </a>
+            <a href="enchantment.html">
+                <h3>Enchantment</h3>
+            </a>
         </nav>
     </header>
     <main>
         <section>
             <div class="home-hero">
-                <img src="images/logo.png" alt="Site Logo" />
-                <h1>Enchant XPlore</h1>
-                <h3>The free enchantment index</h3>
-                <p>This is temporary text which will be replaced by a decription of this website and its services.</p>
+                <img class="shadow" src="images/logo.png" alt="Site Logo" />
+                <h1 class="shadow">Enchant XPlore</h1>
+                <h2 class="shadow">The free enchantment index</h2>
+                <p class="shadow m-t-lg">Welcome to Enchant XPlore, the free enchantment index for all Minecraft
+                    players. Detailed descriptions are available for every enchantment. To get started, select a gear
+                    category or a specific enchamtment.</p>
             </div>
         </section>
-        <section>
-            <h2>All Categories</h2>
-            <ol class="all-categories">
+        <section class="flex-center p-h">
+            <h2 class="text-center">All Categories</h2>
+            <ol class="all-categories m-b-md">
                 <li>Please wait while we load the enchantments...</li>
             </ol>
-            <h2>All Enchantments</h2>
-            <ol class="all-enchantments">
+            <h2 class="text-center m-t-lg">All Enchantments</h2>
+            <ol class="all-enchantments m-b-md">
                 <li>Please wait while we load the enchantments...</li>
             </ol>
         </section>
     </main>
     <footer>
-        <p>&copy; 2022</p>
+        <p class="m-none">&copy; Aaron Fox 2022</p>
         <a href="site-plan.html">Site Plan</a>
     </footer>
 </body>
+<script src="site.js"></script>
 
 </html>
