@@ -153,11 +153,22 @@ ol {
     list-style: none;
     text-align: center;
     padding: 0;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+ol>li {
+    margin: 1em;
 }
 
 ol a {
     display: flex;
     align-items: center;
+    text-align: left;
+}
+
+ol span{
+    color:var(--accent1-color);
 }
 
 ol img {
