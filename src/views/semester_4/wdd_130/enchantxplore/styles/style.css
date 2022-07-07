@@ -102,6 +102,7 @@ header {
     background-color: var(--primary-color);
     display: grid;
     grid-template-columns: auto 1fr;
+    color: var(--accent2-color);
 }
 
 header>.logo-link {
@@ -117,9 +118,32 @@ header nav {
     font-family: var(--heading-font);
 }
 
+nav .dropdown {
+    display: none;
+    position: relative;
+    left: -100%;
+    top: 50%;
+}
+
+nav .dropdown a {
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown ol {
+    position: absolute;
+    left: -2em;
+    background-color: var(--accent2-color);
+    color: initial;
+}
+
+nav a:hover .dropdown {
+    display: block;
+}
+
 header nav a,
 footer a {
-    color: var(--accent2-color);
+    color: inherit;
     height: 100%;
     padding: 0 2em;
     margin: 0 1em;
@@ -167,8 +191,8 @@ ol a {
     text-align: left;
 }
 
-ol span{
-    color:var(--accent1-color);
+ol span {
+    color: var(--accent1-color);
 }
 
 ol img {
@@ -259,4 +283,14 @@ img.shadow:hover {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.grid-half {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
 }
