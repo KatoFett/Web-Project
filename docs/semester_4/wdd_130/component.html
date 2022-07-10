@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>WDD 130 | Aaron Fox</title>
+    <title>Component | Aaron Fox</title>
     <link rel="stylesheet" href="../../style.css" />
 </head>
 
@@ -66,36 +66,63 @@
     <div id="BodyWrapper" style='background-image:url("../../images/background.png")'>
         <div id="BodyContent">
             
-<h2 class="text-center">Hello Professor Thompson</h2>
-<hr />
-<div class="m-b-md">
-    <h6 class="inline">Component:</h6>
-    <a href="component.html">Click Here To Go</a>
+<h1>Accordion</h1>
+<style>
+    .accordion>button {
+        background-color: #ccc;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        text-align: left;
+        border: none;
+        outline: none;
+        transition: 0.2s;
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    .accordion>button::after {
+        content: '+';
+        float: right;
+    }
+
+    .accordion:hover>button,
+    .accordion.open>button {
+        background-color: #999;
+    }
+
+    .accordion .content {
+        background-color: #eee;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+    }
+
+    .accordion.open>button::after {
+        content: '-';
+    }
+</style>
+<div class="accordion">
+    <button>Content</button>
+    <div class="content">
+        <p>Surprise!</p>
+    </div>
 </div>
-<div class="m-b-md">
-    <h6 class="inline">EnchantXPlore (Personal Site):</h6>
-    <a href="enchantxplore/index.html">Click Here To Go</a>
-</div>
-<div class="m-b-md">
-    <h6 class="inline">EnchantXPlore (Personal Site) Plan:</h6>
-    <a href="enchantxplore/site-plan.html">Click Here To Go</a>
-</div>
-<div class="m-b-md">
-    <h6 class="inline">Week 06 CSS Positioning</h6>
-    <a href="css_positioning/positioning.html">Click Here To Go</a>
-</div>
-<div class="m-b-md">
-    <h6 class="inline">Elevator Pitch</h6>
-    <a href="files/Elevator_Pitch.docx">Elevator_Pitch.docx</a>
-</div>
-<div class="m-b-md">
-    <h6 class="inline">White-Water Rafting Website:</h6>
-    <a href="wwr/index.html">Click Here To Go</a>
-</div>
-<div class="m-b-md">
-    <h6 class="inline">White-Water Rafting Website Plan:</h6>
-    <a href="wwr/site-plan-rafting.html">Click Here To Go</a>
-</div>
+
+<script type="text/javascript">
+    document.querySelector('.accordion > button').addEventListener('click', function (e) {
+        var accordion = this.parentNode;
+        accordion.classList.toggle('open');
+        var content = accordion.querySelector('.content');
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+        }
+        else {
+            content.style.maxHeight = content.scrollHeight + 'px';
+        }
+    });
+</script>
         </div>
     </div>
     

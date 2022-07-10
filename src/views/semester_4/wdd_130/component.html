@@ -1,0 +1,58 @@
+<variable name="PageTitle" value="Component" />
+<h1>Accordion</h1>
+<style>
+    .accordion>button {
+        background-color: #ccc;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        text-align: left;
+        border: none;
+        outline: none;
+        transition: 0.2s;
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    .accordion>button::after {
+        content: '+';
+        float: right;
+    }
+
+    .accordion:hover>button,
+    .accordion.open>button {
+        background-color: #999;
+    }
+
+    .accordion .content {
+        background-color: #eee;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+    }
+
+    .accordion.open>button::after {
+        content: '-';
+    }
+</style>
+<div class="accordion">
+    <button>Content</button>
+    <div class="content">
+        <p>Surprise!</p>
+    </div>
+</div>
+
+<script type="text/javascript">
+    document.querySelector('.accordion > button').addEventListener('click', function (e) {
+        var accordion = this.parentNode;
+        accordion.classList.toggle('open');
+        var content = accordion.querySelector('.content');
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+        }
+        else {
+            content.style.maxHeight = content.scrollHeight + 'px';
+        }
+    });
+</script>
