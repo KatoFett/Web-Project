@@ -180,7 +180,7 @@
             {
                 "id": "bane-of-arthropods",
                 "shortDescription": "Large damage against arthropods.",
-                "longDescription": "Increases damage by a large amount against arthropods (silverfish, spiders, etc). This enchantment is generally not recommended as arthropods already have low health.",
+                "longDescription": "Increases damage by a large amount against arthropods (silverfish, spiders, etc). This enchantment is never recommended as arthropods already have low max health.",
                 "levelDescription": "Damage increases with each level.",
                 "maxLevel": 5,
                 "categories": ["sword"],
@@ -267,6 +267,33 @@
                 "exclusions": [
                     "mending"
                 ]
+            },
+            {
+                "id": "efficiency",
+                "shortDescription": "Mine faster.",
+                "longDescription": "Increases base mining speed. It is sometimes possible to insta-mine, depending on the tool, material, and efficiency level.",
+                "levelDescription": "Mining speed increases with each level.",
+                "maxLevel": 5,
+                "categories": ["tool"],
+            },
+            {
+                "id": "fortune",
+                "shortDescription": "Increasd ore yield.",
+                "longDescription": "Mining a natural ore block will have a chance to yield more ore drops. This effect does not work on ore blocks placed by players.",
+                "levelDescription": "Potential yield increases with each level.",
+                "maxLevel": 5,
+                "categories": ["tool"],
+                "exclusions": ["silk-touch"]
+            },
+            {
+                "id": "silk-touch",
+                "shortDescription": "Drop original block.",
+                "longDescription": "Almost all blocks mined with silk-touch will drop themselves instead of a mined varient. E.g. stone will drop itself instead of cobblestone. Glass will drop itself and not shatter, and grass and mycelium will drop themselves too.",
+                "maxLevel": 1,
+                "categories": ["tool"],
+                "exclusions": [
+                    "fortune"
+                ]
             }
         ],
         "categories": [
@@ -332,8 +359,56 @@
                     + "<li>$feather-falling$ is a must.</li>"
                     + "<li>$depth-strider$ is up to personal preference. I've found that I'm underwater more often than on soul sand, and freezing water can be annoying when you're on a farm.</li>"
                     + "</ul>"
+            },
+            {
+                "id": "sword",
+                "recommended": [
+                    "mending",
+                    "unbreaking",
+                    "sharpness",
+                    "knockback",
+                    "fire-aspect",
+                    "looting",
+                    "sweeping-edge"
+                ],
+                "recommendDescription": "<ul>"
+                    + "<li>$mending$ and $unbreaking$ are practically necessary if you want to keep the sword forever.</li>"
+                    + "<li>$sharpness$ is chosen as it provides the most damage to all entities (and players if you're going for PvP). This can be swapped with $smite$ if you will be killing more undead. Never go for $bane-of-arthropods$.</li>"
+                    + "<li>$knockback$ is up to personal preference. Some players don't like their kill flying away. This is valid, but I've found it helps prevent Creeper explosions. Necessary for PvP.</li>"
+                    + "<li>$fire-aspect$ is a double-edged sword (pun intended). Igniting sheep is super helpful, but igniting zombies is super detrimental. Necessary for PVP.</li>"
+                    + "<li>$looting$ should be a priority.</li>"
+                    + "<li>$sweeping-edge$ really shines at the mob grinder but almost nowhere else. Your choice.</li>"
+                    + "</ul>"
+            },
+            {
+                "id": "tool",
+                "recommended": [
+                    "mending",
+                    "unbreaking",
+                    "efficiency"
+                ],
+                "recommendDescription": "<ul>"
+                    + "<li>$mending$ and $unbreaking$ are practically necessary if you want to keep the tool forever.</li>"
+                    + "<li>$efficiency$ is a must.</li>"
+                    + "<li>You might want to consider having both a $fortune$ pickaxe and a $silk-touch$ pickaxe as both enchantments are valuable, though $fortune$ will benefit you much more often. Put $silk-touch$ on your shovel.</li>"
+                    + "<li>Axes can be enchanted with $sharpness$, $smite$ or $bane-of-arthropods$.</li>"
+                    + "</ul>"
+            },
+            {
+                "id": "bow",
+                "recommended": [
+                    "mending",
+                    "unbreaking",
+                    "power",
+                    "punch",
+                    "flame"
+                ],
+                "recommendDescription": "<ul>"
+                    + "<li>$mending$ is taken over $infinity$ because not only will you be able to keep the bow forever, arrows can be easily obtained through crafting, trading or killing skeletons. "
+                    + "For infinite arrows, consider building a trading hall and trading with a fletcher and/ or constructing a skeleton farm out of a skeleton dungeon.</li > "
+                    + "<li>Your bow should have these exact enchantments.</li>"
+                    + "</ul>"
             }
-
         ]
     }
     // Load categories
@@ -379,6 +454,6 @@ function GetCategoryHTML(categories) {
 function FormatHTML(str) {
     const reg = /\$.*?\$/g;
     const enchants = [...str.matchAll(reg)];
-    enchants.forEach(enchant => str = str.replaceAll(enchant[0], '<a href="enchantment?selected=' + enchant[0].replaceAll('$', '') + '">' + GetName(enchant[0].replaceAll('$', '')) + '</a>'));
+    enchants.forEach(enchant => str = str.replaceAll(enchant[0], '<a href="enchantment.html?selected=' + enchant[0].replaceAll('$', '') + '">' + GetName(enchant[0].replaceAll('$', '')) + '</a>'));
     return str;
 }

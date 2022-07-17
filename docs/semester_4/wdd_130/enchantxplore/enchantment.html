@@ -9,34 +9,53 @@
 
 <body>
     <header>
-        <a href=""><img src="images/logo.png" alt="Site Icon" /></a>
+        <a class="logo-link" href="">
+            <img class="no-hover" src="images/logo.png" alt="Site Logo" />
+        </a>
         <nav>
-            <a href="index.html">Home</a>
-            <a href="category.html">Category</a>
-            <a href="enchantment.html">Enchantment</a>
+            <a href="index.html">
+                <h3>Home</h3>
+            </a>
+            <a>
+                <h3>Category</h3>
+                <div class="dropdown">
+                    <ol class="all-categories"></ol>
+                </div>
+            </a>
+            <a>
+                <h3>Enchantment</h3>
+                <div class="dropdown">
+                    <ol class="all-enchantments" style="width:400px"></ol>
+                </div>
+            </a>
         </nav>
     </header>
     <main>
         <section>
-            <div class="center">
-                <img src="" alt="Enchantment Icon" />
-                <h1 class="EnchantmentName">Enchantment</h1>
+            <div class="flex-center flex-row">
+                <img class="m-w-md" src="images/enchanted_book.gif" alt="Enchantment Icon" />
+                <div class="m-w-md">
+                    <h1 class="EnchantmentName">Loading Enchantment...</h1>
+                    <h3 id="EnchantmentLvl" class="secondary"></h3>
+                    <p id="LvlDescription"></p>
+                </div>
             </div>
-            <p id="EnchantmentDescription">This is a long description which will be set by JavaScript based on the selected enchantment. It will discuss how the enchantment works and any other important information.</p>
+            <p id="EnchantmentDescription" class="m-t-lg">Loading...</p>
         </section>
-        <section class="grid-half">
+        <section class="grid-half m-t-lg">
             <div>
-                <h2>All Categories</h2>
+                <h2 class="text-center">All Categories</h2>
                 <ol id="AllCategoriesList">
                     <li>Please wait while we load the enchantments...</li>
                 </ol>
             </div>
             <div>
-                <h2>Exclusions</h2>
+                <h2 class="text-center">Exclusions</h2>
                 <ol id="ExclusionsList">
                     <li>Please wait while we load the enchantments...</li>
                 </ol>
-                <p id="NoExclusionsMsg"><span class="EnchantmentName">Enchantment</span> is not mutually exclusive with any enchantments.</p>
+                <p id="NoExclusionsMsg" hidden="hidden"><span class="EnchantmentName">Enchantment</span> is not mutually
+                    exclusive with any enchantments.</p>
             </div>
         </section>
     </main>
@@ -45,5 +64,7 @@
         <a href="site-plan.html">Site Plan</a>
     </footer>
 </body>
+<script src="scripts/site.js"></script>
+<script src="scripts/enchantment.js"></script>
 
 </html>

@@ -52,6 +52,7 @@ main {
     max-width: 1200px;
     margin: 0 auto;
     background-color: var(--accent2-color);
+    padding: 1em;
 }
 
 h1,
@@ -135,6 +136,7 @@ nav .dropdown a {
     left: -2em;
     background-color: var(--accent2-color);
     color: initial;
+    box-shadow: 0 2px 8px 2px black;
 }
 
 nav a:hover .dropdown {
@@ -273,6 +275,11 @@ img.shadow:hover {
     margin-bottom: 10px;
 }
 
+.m-w-md {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 .p-h {
     padding-top: 40px;
     padding-bottom: 40px;
@@ -293,4 +300,8 @@ img.shadow:hover {
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
+}
+
+.secondary {
+    color: var(--secondary-color);
 }
