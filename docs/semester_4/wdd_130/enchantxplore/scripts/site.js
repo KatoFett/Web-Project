@@ -228,7 +228,7 @@
             },
             {
                 "id": "looting",
-                "shortDescription": "More mob drops.",
+                "shortDescription": "Increases mob drops.",
                 "longDescription": "Increases the chance and quantity of loot from killing mobs. For example, sheep will drop more mutton and wither skeletons will drop their skull more frequently. The loot depends on each mob.",
                 "levelDescription": "Loot increases with each level.",
                 "maxLevel": 3,
@@ -236,7 +236,7 @@
             },
             {
                 "id": "power",
-                "shortDescription": "Increased arrow damage.",
+                "shortDescription": "Increases arrow damage.",
                 "longDescription": "Increases damage done by arrows shot by the bow.",
                 "levelDescription": "Damage increases with each level.",
                 "maxLevel": 5,
@@ -244,7 +244,7 @@
             },
             {
                 "id": "punch",
-                "shortDescription": "Knock enemies backwards.",
+                "shortDescription": "Knocks enemies backwards.",
                 "longDescription": "Shooting an entity will send it flying away from you.",
                 "levelDescription": "Distance increases with each level.",
                 "maxLevel": 2,
@@ -252,7 +252,7 @@
             },
             {
                 "id": "flame",
-                "shortDescription": "Ignite enemies.",
+                "shortDescription": "Ignites enemies.",
                 "longDescription": "Shooting an entity will light it on fire. Unless it dies instantly, meat dropped by passive mobs will be cooked.",
                 "levelDescription": "Fire duration increases with each level.",
                 "maxLevel": 2,
@@ -278,7 +278,7 @@
             },
             {
                 "id": "fortune",
-                "shortDescription": "Increasd ore yield.",
+                "shortDescription": "Increases ore yield.",
                 "longDescription": "Mining a natural ore block will have a chance to yield more ore drops. This effect does not work on ore blocks placed by players.",
                 "levelDescription": "Potential yield increases with each level.",
                 "maxLevel": 5,
@@ -287,7 +287,7 @@
             },
             {
                 "id": "silk-touch",
-                "shortDescription": "Drop original block.",
+                "shortDescription": "Drops original block.",
                 "longDescription": "Almost all blocks mined with silk-touch will drop themselves instead of a mined varient. E.g. stone will drop itself instead of cobblestone. Glass will drop itself and not shatter, and grass and mycelium will drop themselves too.",
                 "maxLevel": 1,
                 "categories": ["tool"],
