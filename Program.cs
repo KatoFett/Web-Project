@@ -6,11 +6,11 @@
     using System.Text.RegularExpressions;
     public class Program
     {
-        static string SrcDirectory = $"{Environment.CurrentDirectory}\\src";
+        static string BaseDirectory = "D:\\School\\Web Project";
+        static string SrcDirectory = $"{BaseDirectory}\\src";
         static string SrcComponentsDirectory = $"{SrcDirectory}\\components";
-        static string SrcViewsDirectory = $"{SrcDirectory}\\views";
         static string LayoutDirectory = $"{SrcDirectory}\\layout.html";
-        static string DistDirectory = $"{Environment.CurrentDirectory}\\docs";
+        static string DistDirectory = $"{BaseDirectory}\\docs";
 
         static string[] InternalDirectories = new string[]
         {
